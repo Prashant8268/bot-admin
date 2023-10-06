@@ -1,0 +1,40 @@
+{
+  "name": "bot-admin",
+  "version": "1.0.0",
+  "description": "This is admin panel for @hospalsBot ",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Prashant8268/bot-admin.git"
+  },
+  "author": "Prashant",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Prashant8268/bot-admin/issues"
+  },
+  "homepage": "https://github.com/Prashant8268/bot-admin#readme",
+  "dependencies": {
+    "crypto": "^1.0.1",
+    "dotenv": "^16.3.1",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "express-ejs-layouts": "^2.5.1",
+    "express-session": "^1.17.3",
+    "googleapis": "^126.0.1",
+    "mongoose": "^7.5.4",
+    "node-sass": "^9.0.0",
+    "node-sass-middleware": "^1.1.0",
+    "nodemon": "^3.0.1",
+    "npm": "^10.2.0",
+    "passport": "^0.6.0",
+    "passport-google-oauth": "^2.0.0",
+    "passport-google-oauth20": "^2.0.0",
+    "sass": "^1.69.0",
+    "session": "^0.1.0",
+    "update": "^0.7.4"
+  }
+}

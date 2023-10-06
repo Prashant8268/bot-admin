@@ -1,0 +1,56 @@
+@import url("https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Montserrat:wght@100&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Sorts+Mill+Goudy:ital@1&display=swap");
+body {
+  margin: 0;
+  padding: 0; }
+
+.hero-section {
+  height: 97%;
+  padding-bottom: 1.3rem;
+  padding: 1rem 0.3rem 0.1rem 0.3rem;
+  background: linear-gradient(270deg, rgba(255, 255, 255, 0), rgba(10, 10, 10, 0.7)), url("../images/icons.jpg");
+  background-size: cover; }
+  .hero-section .header {
+    position: absolute;
+    z-index: 1; }
+    .hero-section .header .container {
+      color: #ffffffff;
+      font-size: 35px;
+      font-family: 'Major Mono Display', monospace;
+      justify-content: space-between;
+      display: flex;
+      flex-direction: row; }
+
+#loginForm {
+  position: relative;
+  top: 50%;
+  width: 60%;
+  height: auto; }
+  #loginForm .smallText {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    color: white;
+    margin-bottom: 0.8rem;
+    margin-left: 1rem;
+    width: 50%; }
+  #loginForm a {
+    color: black;
+    text-decoration: none;
+    background-color: white;
+    padding: 0.3rem;
+    margin-left: 1rem;
+    border-radius: 2rem;
+    justify-self: center;
+    display: flex;
+    flex-shrink: 1;
+    width: fit-content; }
+
+@media screen and (max-width: 500px) {
+  .hero-section {
+    background: linear-gradient(270deg, rgba(255, 255, 255, 0), rgba(10, 10, 10, 0.7)), url("../images/phone.jpg");
+    background-size: cover; }
+  #loginForm {
+    width: 100%; }
+    #loginForm .smallText {
+      width: 80%;
+      font-size: 1rem; } }
