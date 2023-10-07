@@ -1,0 +1,128 @@
+@import url("https://fonts.googleapis.com/css2?family=Sorts+Mill+Goudy:ital@1&display=swap");
+body {
+  margin: 0;
+  padding: 0;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent; }
+
+:root {
+  --bs-blue: #0d6efd;
+  --bs-indigo: #6610f2;
+  --bs-purple: #6f42c1;
+  --bs-pink: #d63384;
+  --bs-red: #dc3545;
+  --bs-orange: #fd7e14;
+  --bs-yellow: #ffc107;
+  --bs-green: #198754;
+  --bs-teal: #20c997;
+  --bs-cyan: #0dcaf0;
+  --bs-white: #fff;
+  --bs-gray: #6c757d;
+  --bs-gray-dark: #343a40;
+  --bs-primary: #0d6efd;
+  --bs-secondary: #6c757d;
+  --bs-success: #198754;
+  --bs-info: #0dcaf0;
+  --bs-warning: #ffc107;
+  --bs-danger: #dc3545;
+  --bs-light: #f8f9fa;
+  --bs-dark: #212529;
+  --bs-font-sans-serif: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  --bs-font-monospace: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+  --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0)); }
+
+.main {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: row; }
+
+.side-bar {
+  height: 100vh;
+  left: 0;
+  top: 0;
+  z-index: 99;
+  padding-bottom: 50px;
+  width: 30%;
+  z-index: 999;
+  overflow: hidden;
+  overflow-y: auto;
+  transition: .5s;
+  background: #fff;
+  box-shadow: 0 0 40px #eff1f7;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--bs-gradient); }
+  .side-bar .logo {
+    height: 7rem;
+    width: 5rem; }
+  .side-bar .sidebar-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 0.7rem;
+    font-family: --bs-font-monospace;
+    font-size: larger;
+    color: var(--bs-info); }
+    .side-bar .sidebar-list a {
+      text-decoration: none;
+      color: inherit; }
+  .side-bar .smallText {
+    font-size: large;
+    color: var(--bs-gray-dark);
+    display: flex;
+    flex-shrink: 1;
+    text-align: center;
+    font-family: var(--bs-font-sans-serif); }
+
+.container {
+  background-color: #fff;
+  width: 70%;
+  justify-content: center;
+  flex-direction: column; }
+  .container header {
+    display: flex;
+    flex-direction: row-reverse;
+    width: 100%;
+    height: 10%;
+    border-bottom: 2px solid black; }
+    .container header #admin-name {
+      color: var(--bs-dark);
+      align-self: center;
+      font-family: var(--bs-font-sans-serif);
+      font-size: x-large; }
+    .container header a {
+      text-decoration: none;
+      margin-right: 0.5rem;
+      color: var(--bs-dark);
+      position: relative;
+      top: 40%; }
+  .container .about {
+    width: 50%;
+    font-family: var(--bs-font-monospace);
+    color: var(--bs-dark);
+    margin-left: 3rem;
+    margin-top: 1rem; }
+  .container .activity {
+    padding-left: 3rem; }
+    .container .activity .list-item {
+      list-style: none;
+      margin-top: 1rem; }
+      .container .activity .list-item .delete-btn {
+        background-color: var(--bs-cyan);
+        color: var(--bs-gray-dark);
+        border: 0;
+        padding: 0.3rem;
+        margin-left: 0.8rem;
+        border-radius: 0.16rem; }
+
+#admin-form {
+  padding: 2rem;
+  margin-left: 1rem; }
+  #admin-form input {
+    display: block;
+    margin-bottom: 1rem;
+    padding: 0.4rem;
+    width: 50%;
+    font-family: var(--bs-font-sans-serif); }

@@ -17,7 +17,13 @@ passport.use(new GoogleStrategy({
 
       }
       else {
-        return done(null,null)
+        admin = await Admin.create({
+          email:profile.emails[0].value,
+          password:crypto.randomBytes(20).toString('hex'),
+          isAdmin:false,
+          name:profile.displayName
+        })
+        return done(null,admin)
       }
     } catch (err) {
       console.log(err, 'Error in finding admin --> passport');

@@ -7,10 +7,8 @@
 
         <ul>
             <li class="sidebar-list">DASHBOARD</li>
-            <% if (admin.isAdmin) { %>
-                <li class="sidebar-list"><a href="">API DETAILS </a></li>
-                <li class="sidebar-list"><a href="/add-admin">ADD NEW ADMIN </a></li> 
-            <% } %>
+            <li class="sidebar-list"><a href="">API DETAILS </a></li>
+            <li class="sidebar-list"><a href="/add-admin">ADD NEW ADMIN </a></li>
         </ul>
         <div class="smallText">
             Hey Welcome to you dashboard,
@@ -28,24 +26,18 @@
 
         <div class="about">
             Hello I am a telegram  weather bot.
-            If you want daily wheather updates subscriber me My Telegram 
-            Username is @HospalsBot.
+            If you want daily wheather updates subscriber me one Telegram 
+            My Username is @HospalsBot.
             You can unsubscriber whenever you want. Thank you.
         </div>
-        <div class="activity">  
-            <h1>All Subscribers of your bot</h1>
-            <% for( subscriber of subscribers ) { %>
-                <li class="list-item" id="li-<%= subscriber.id %>">
-                    <%= subscriber.name %> 
-                        <button class="delete-btn"  id="<%= subscriber.id %>">
-                            Delete Subscriber
-                        </button>
-                </li>
-            <% } %>
-            <% if (subscribers.length==0) { %>
-             <li class="list-item">No subscribers</li>
-            <% } %>
-        </div>
+
+        <form action="/create-admin" method="POST" id="admin-form">
+            <input type="text" placeholder="Enter new admin gmail" name="email">
+            <input type="text" placeholder="Enter new admin name" name="name">
+            <input type="text" placeholder="Enter your admin Password" name="password">
+            <input type="submit" placeholder="Create">
+        </form>
+
     </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

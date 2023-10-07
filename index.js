@@ -4,14 +4,14 @@ const dotenv = require('dotenv');
 const session = require('express-session');
 const passport = require('passport');
 const passportGoogle = require('./config/passport-google-Oauth-strategy');
-
 dotenv.config(); 
+const bodyParser = require('body-parser')
 
 const PORT = process.env.PORT || 3000; 
 
 const app = express();
 const db = require('./config/mongoose');
-
+app.use(bodyParser.urlencoded({ extended: false }));
 // Middleware for session and passport
 app.use(session({ 
   name: "teleBot",
@@ -25,6 +25,7 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+
 app.use(passport.setAuthenticatedUser);
 
 // Middleware for SASS compilation
