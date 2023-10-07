@@ -6,13 +6,14 @@ const passport = require('passport');
 const passportGoogle = require('./config/passport-google-Oauth-strategy');
 dotenv.config(); 
 const bodyParser = require('body-parser')
-
+const { Telegraf } = require('telegraf');
 const PORT = process.env.PORT || 3000; 
-
 const app = express();
 const db = require('./config/mongoose');
 app.use(bodyParser.urlencoded({ extended: false }));
-// Middleware for session and passport
+
+const { bot } = require('./bot'); 
+
 app.use(session({ 
   name: "teleBot",
   saveUninitialized: false,
