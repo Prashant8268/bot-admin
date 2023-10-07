@@ -93,6 +93,17 @@ bot.command('weather', async(ctx) => {
     ctx.reply(response);
   });
 
+
+  bot.command('todayWeather',async(ctx)=>{
+    const existingSubscriber = await Subscriber.findOne({userId:ctx.message.from.id});
+    if(!existingSubscriber){
+      ctx.reply('You are not subscribed. Please Subscribe or use /weather cityName command');
+      return ;
+    }
+    const todayTem = await this.fetchWeather(existingSubscriber.city);
+    ctx.reply(`${todayTem}`);
+  })
+
   function processUserMessage(userMessage, userId) {
     if (userMessage.toLowerCase().includes('hello')) {
       return 'Hi there!';
