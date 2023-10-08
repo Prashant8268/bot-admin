@@ -1,7 +1,7 @@
   let deleteBtns = document.querySelectorAll('.delete-btn');
     deleteBtns.forEach((item)=>{
         item.addEventListener('click',async(event)=>{
-            // event.preventDefault();
+            event.preventDefault();
             const id = item.id;;
             await $.ajax({
                 type: 'get',

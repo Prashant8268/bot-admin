@@ -92,7 +92,7 @@
                     </defs>
                   </svg>
                   <div class="list-text">
-                   <a href="" style="text-decoration: none;">API's</a> 
+                   <a href="/api" style="text-decoration: none;">API's</a> 
                   </div>
             </div>
             <div class="list-item">
@@ -123,9 +123,9 @@
                 <div class="heading">All Subscribers of Hospals</div> 
                 <div class="subscribers-container">
                     <% for( subscriber of subscribers ) { %>
-                        <div class="subscriber" id="li-<%= subscriber.id  %>">
+                        <div class="subscriber" id="li-<%= subscriber.id %>">
                             <div><%= subscriber.name %></div>
-                            <div class="delete-btn">Delete</div>
+                            <div class="delete-btn"  id="<%= subscriber.id  %>">Delete</div>
                         </div>
                     <% } %>
                 </div>   

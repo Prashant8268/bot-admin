@@ -26,7 +26,7 @@
                     </defs>
                   </svg>
                   <div class="list-text">
-                   <a href="" style="text-decoration: none;">/General</a> 
+                   <a href="/dashboard" style="text-decoration: none;">General</a> 
                   </div>
             </div>
             <div class="list-item">
@@ -58,7 +58,7 @@
                     </defs>
                   </svg>
                   <div class="list-text">
-                   <a href="/add-admin">New Admin</a> 
+                   <a href="/add-admin" style="text-decoration: none;">New Admin</a> 
                   </div>
             </div>
         </div>
@@ -70,12 +70,12 @@
                 You can unsubscriber whenever you want. Thank you.
             </div>
             <div class="form-container ">
-                <form class="api-form" action="/api/update-api" method="POST"   >
+                <form class="admin-form"  action="/dashboard" method="POST"  >
                     <label>Weather API Key</label>
-                    <input type="text" placeholder="New admin gmail" name="WEATHER_KEY" <%= apis.WEATHER_KEY  %>>
+                    <input type="text" placeholder="New admin gmail" name="WEATHER_KEY" value="<%= apis[0].key%>">
                     <label>Get Coordinates API Key</label>
-                    <input type="text" placeholder="New admin name" name="GET_COORDINATS_KEY" <%= apis.GET_COORDINATS_KEY %> >
-                    <button>Update</button>
+                    <input type="text" placeholder="New admin name" name="GET_COORDINATS_KEY" value="<%= apis[1].key%>" >
+                    <button type="submit">Update</button>
                 </form>
             </div>
         </div>

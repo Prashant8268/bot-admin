@@ -35,6 +35,7 @@ module.exports.dashboard = async(req,res)=>{
 
 // for deleting a subscriber
 module.exports.deleteSubscriber = async(req,res)=>{
+
     const subscriber = await Subscriber.findByIdAndDelete(req.query.id);
     return res.json({
         id: req.query.id
@@ -78,6 +79,7 @@ module.exports.createAdmin= async(req,res)=>{
 
 module.exports.api = async(req,res)=>{
     let apis = await Api.find();
+    console.log(apis)
     return res.render('updateApi',{
         apis
     })
