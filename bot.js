@@ -5,11 +5,11 @@ const axios = require('axios');
 const schedule = require('node-schedule');
 const Api = require('./models/Api');
 const { initialize } = require('passport');
-
+let WEATHER_KEY;
+let GET_COORDINATS_KEY;
 async function getApiKeys(){
-
-  let WEATHER_KEY = await Api.findOne({name:`WEATHER_KEY`});
-  let GET_COORDINATS_KEY = await Api.findOne({name:`GET_COORDINATS_KEY`})
+   WEATHER_KEY = await Api.findOne({name:`WEATHER_KEY`});
+   GET_COORDINATS_KEY = await Api.findOne({name:`GET_COORDINATS_KEY`});
 
 }
 getApiKeys();
@@ -87,6 +87,10 @@ bot.command('weather', async(ctx) => {
     } else {
       const city = commandArgs.slice(1).join(' ');
       const todayTem = await fetchWeather(city);
+      if(!todayTem){
+        ctx.reply('Report is not present try again later');
+        return ;
+      }
       ctx.reply(` ${todayTem}`);
     }
   });
@@ -95,23 +99,26 @@ bot.command('weather', async(ctx) => {
   bot.command('hello',(ctx)=>{
     ctx.reply('I am Fine How are you ')
   })
-  bot.on('text', async (ctx) => {
-    const userMessage = ctx.message.text;
-    const userId = ctx.message.from.id;
-    const response =  processUserMessage(userMessage, userId);
-    ctx.reply(response);
-  });
-
-
   bot.command('todayWeather',async(ctx)=>{
     const existingSubscriber = await Subscriber.findOne({userId:ctx.message.from.id});
     if(!existingSubscriber){
       ctx.reply('You are not subscribed. Please Subscribe or use /weather cityName command');
       return ;
     }
-    const todayTem = await this.fetchWeather(existingSubscriber.city);
+    const todayTem = await fetchWeather(existingSubscriber.city);
+    if(!todayTem){
+      ctx.reply('Report is not present try again later');
+      return ;
+    }
     ctx.reply(`${todayTem}`);
   })
+
+  bot.on('text', async (ctx) => {
+    const userMessage = ctx.message.text;
+    const userId = ctx.message.from.id;
+    const response =  processUserMessage(userMessage, userId);
+    ctx.reply(response);
+  });
 
   function processUserMessage(userMessage, userId) {
     if (userMessage.toLowerCase().includes('hello')) {
@@ -124,9 +131,15 @@ bot.command('weather', async(ctx) => {
   }
 
  async function fetchWeather(city){
-    const coordinatesResponse = await axios.get(`https://api.opencagedata.com/geocode/v1/json?q=${city}&key=${GET_COORDINATS_KEY}`);
+    const coordinatesResponse = await axios.get(`https://api.opencagedata.com/geocode/v1/json?q=${city}&key=${GET_COORDINATS_KEY.key}`);
+    if(coordinatesResponse.data.results==0){
+      return ;
+    }
     const coordinates = coordinatesResponse.data.results[0].geometry;
-    const weatherResponse = await axios.get(`https://api.tomorrow.io/v4/weather/forecast?location=${coordinates.lat},${coordinates.lng}&apikey=${WEATHER_KEY}`);
+    const weatherResponse = await axios.get(`https://api.tomorrow.io/v4/weather/forecast?location=${coordinates.lat},${coordinates.lng}&apikey=${WEATHER_KEY.key}`);
+    if(!weatherResponse){
+      return ;
+    }
     const response = weatherResponse.data.timelines.daily[0].values;
     const humidityAvg = response.humidityAvg;
     const temperatureAvg = response.temperatureAvg;
