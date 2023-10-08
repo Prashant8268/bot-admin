@@ -5,7 +5,7 @@ const Api = require('../models/Api');
 
 module.exports.home = async(req,res)=>{
     await checkAdmin();
-    return res.render('home');
+    return res.status(200).render('home');
 }
 
 module.exports.createSession= (req,res)=>{

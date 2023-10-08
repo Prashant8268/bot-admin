@@ -1,9 +1,11 @@
 const {Telegraf} = require('telegraf');
-const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
+const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN2);
 const Subscriber = require('./models/Subscriber');
 const axios = require('axios');
 const schedule = require('node-schedule');
 const Api = require('./models/Api');
+const userBlock = require('telegraf-userblock');
+
 const { initialize } = require('passport');
 let WEATHER_KEY;
 let GET_COORDINATS_KEY;
@@ -13,21 +15,53 @@ async function getApiKeys(){
 
 }
 getApiKeys();
-
+bot.use(
+  userBlock({
+      onUserBlock: (ctx, next, userId) => {
+          console.log('This user %s has blocked the bot.', userId);
+          return next();
+      },
+  })
+);
 bot.launch().then(() => {
 console.log('Bot has started.');
+bot.use(
+  userBlock({
+      onUserBlock: (ctx, next, userId) => {
+          console.log('This user %s has blocked the bot.', userId);
+          return next();
+      },
+  })
+);
 });
 
+
+
 bot.start((ctx) => {
+  try{
     ctx.reply(`
-      Hello ${ctx.message.from.first_name}, Welcome! I am a weather bot.
-      Follow these commands to interact with me:
-      /subscribe{city}  - To get daily weather updates, e.g /subscribe Delhi.
-      /unsubscribe - To unsubscribe from my service.
-      /todayWeather - To know weather of your city.
-      /weather{city} - To know wheater of a city,e.g /weather Delhi.
-    `);
+    Hello ${ctx.message.from.first_name}, Welcome! I am a weather bot.
+    Follow these commands to interact with me:
+    /subscribe{city}  - To get daily weather updates, e.g /subscribe Delhi.
+    /unsubscribe - To unsubscribe from my service.
+    /todayWeather - To know weather of your city.
+    /weather{city} - To know wheater of a city,e.g /weather Delhi.
+  `);
+  }
+  catch (error) {
+    // Handle the error when the user has blocked the bot
+    if (error.description === 'Forbidden: bot was blocked by the user') {
+      console.log('User has blocked the bot.');
+      // You can log the error and take any necessary actions here
+    } else {
+      // Handle other errors if needed
+      console.error('Error occurred:', error);
+    }
+  }
+
   });
+
+  // bot.telegram.sendMessage(673787261, 'hey you area er ae r')
 
 
 bot.command('subscribe', async (ctx) => {
@@ -183,6 +217,22 @@ const job = schedule.scheduleJob('0 7 * * *', async () => {
       }
 });
 
+const botEndpoint = 'https://tele-weather-bot.onrender.com/';
+async function pingBot() {
+  try {
+    const response = await axios(botEndpoint);
+    if (response.ok) {
+      console.log(`Ping successful: ${new Date().toISOString()}`);
+    } else {
+      console.error(`Ping failed with status code: ${response.status}`);
+    }
+  } catch (error) {
+    console.error(`Error occurred while pinging the bot: ${error.message}`);
+  }
+}
+const pingInterval = 5 * 60 * 1000; 
+setInterval(pingBot, pingInterval);
+pingBot();
 
 module.exports = {
     bot,
