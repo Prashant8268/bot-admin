@@ -25,14 +25,6 @@ bot.use(
 );
 bot.launch().then(() => {
 console.log('Bot has started.');
-bot.use(
-  userBlock({
-      onUserBlock: (ctx, next, userId) => {
-          console.log('This user %s has blocked the bot.', userId);
-          return next();
-      },
-  })
-);
 });
 
 
@@ -49,26 +41,20 @@ bot.start((ctx) => {
   `);
   }
   catch (error) {
-    // Handle the error when the user has blocked the bot
     if (error.description === 'Forbidden: bot was blocked by the user') {
       console.log('User has blocked the bot.');
-      // You can log the error and take any necessary actions here
     } else {
-      // Handle other errors if needed
       console.error('Error occurred:', error);
     }
   }
-
   });
-
-  // bot.telegram.sendMessage(673787261, 'hey you area er ae r')
 
 
 bot.command('subscribe', async (ctx) => {
+  try{
     let userId = ctx.message.from.id;
     const name = ctx.message.from.first_name;
     const existingSubscriber = await Subscriber.findOne({userId});
-
     if(existingSubscriber){
         ctx.reply('You are already subscribed');
         return;
@@ -84,7 +70,7 @@ bot.command('subscribe', async (ctx) => {
     }
     if (existingSubscriber) {
         ctx.reply('You are already subscribed.');
-      } else{
+      } else{ 
         // Create a new subscriber
         const newSubscriber = await Subscriber.create({
           name,userId,city
@@ -96,10 +82,16 @@ bot.command('subscribe', async (ctx) => {
         ctx.reply('Unable to subscribe at the moment. Please try again later.');
       }
     }
+  }
+  catch(err){
+    console.log(err,'errror')
+  }
+
 });
 
 
 bot.command('unsubscribe', async (ctx) => {
+  try{
     let userId = ctx.message.from.id;
     const name = ctx.message.from.first_name;
     const existingSubscriber = await Subscriber.findOne({userId});
@@ -112,9 +104,15 @@ bot.command('unsubscribe', async (ctx) => {
     else{
         ctx.reply(`Hey ${name} you are not subscribed`)
     }
+  }
+  catch(err){
+    console.log(err, 'eroor');
+  }
+
 });
 
 bot.command('weather', async(ctx) => {
+  try{
     const commandArgs = ctx.message.text.split(' '); 
     if (commandArgs.length < 2) {
       ctx.reply('Please provide a city name. Usage: /weather {city}');
@@ -127,34 +125,63 @@ bot.command('weather', async(ctx) => {
       }
       ctx.reply(` ${todayTem}`);
     }
+  }
+  catch(err){
+    console.log(err,'error');
+  }
+
   });
 
-  bot.help((ctx) => ctx.reply('Type /start to interact with me'));
+  bot.help((ctx) => {
+    try{
+      ctx.reply('Type /start to interact with me')
+    }
+    catch(err){
+      console.log(err,'error');
+    }
+  });
   bot.command('hello',(ctx)=>{
-    ctx.reply('I am Fine How are you ')
-  })
-  bot.command('todayWeather',async(ctx)=>{
-    const existingSubscriber = await Subscriber.findOne({userId:ctx.message.from.id});
-    if(!existingSubscriber){
-      ctx.reply('You are not subscribed. Please Subscribe or use /weather cityName command');
-      return ;
+    try{
+      ctx.reply('I am Fine How are you ')
     }
-    const todayTem = await fetchWeather(existingSubscriber.city);
-    if(!todayTem){
-      ctx.reply('Report is not present try again later');
-      return ;
+    catch(err){
+      console.log(err, 'error')
     }
-    ctx.reply(`${todayTem}`);
   })
 
-  bot.on('text', async (ctx) => {
-    const userMessage = ctx.message.text;
-    const userId = ctx.message.from.id;
-    const response =  processUserMessage(userMessage, userId);
-    ctx.reply(response);
+
+bot.command('todayWeather',async(ctx)=>{
+    try{
+      const existingSubscriber = await Subscriber.findOne({userId:ctx.message.from.id});
+      if(!existingSubscriber){
+        ctx.reply('You are not subscribed. Please Subscribe or use /weather cityName command');
+        return ;
+      }
+      const todayTem = await fetchWeather(existingSubscriber.city);
+      if(!todayTem){
+        ctx.reply('Report is not present try again later');
+        return ;
+      }
+      ctx.reply(`${todayTem}`);
+    }
+    catch(err){
+      console.log(err, 'error');
+    }
+  })
+
+bot.on('text', async (ctx) => {
+    try{
+      const userMessage = ctx.message.text;
+      const userId = ctx.message.from.id;
+      const response =  processUserMessage(userMessage, userId);
+      ctx.reply(response);
+    }
+    catch(err){
+      console.log(err, 'error');
+    }
   });
 
-  function processUserMessage(userMessage, userId) {
+function processUserMessage(userMessage, userId) {
     if (userMessage.toLowerCase().includes('hello')) {
       return 'Hi there!';
     }
@@ -164,7 +191,8 @@ bot.command('weather', async(ctx) => {
     return 'I did not understand your message. Please try again or use commands.';
   }
 
- async function fetchWeather(city){
+async function fetchWeather(city){
+  try{
     const coordinatesResponse = await axios.get(`https://api.opencagedata.com/geocode/v1/json?q=${city}&key=${GET_COORDINATS_KEY.key}`);
     if(coordinatesResponse.data.results==0){
       return ;
@@ -197,24 +225,33 @@ bot.command('weather', async(ctx) => {
     Overall It will be a ${condition} day. 
     Thank you.`
     return check;
-} 
+  }
+  catch(err){
+    console.log(err,'error');
+  }
 
+} 
 
 
 
 const job = schedule.scheduleJob('0 7 * * *', async () => {
       // This code will be executed at 7 AM every day
-      console.log('Scheduled task executed at 7 AM.');
-      const subscribers = await Subscriber.find();
-      for (const subscriber of subscribers) {
-        const weatherDetails = await fetchWeather(subscriber.city);
-        if (weatherDetails) {
-          bot.telegram.sendMessage(subscriber.userId,weatherDetails)
-        }
-        else{
-          bot.telegram.sendMessage(subscriber.userId,'Report is not available')
-        }
+  try{
+    console.log('Scheduled task executed at 7 AM.');
+    const subscribers = await Subscriber.find();
+    for (const subscriber of subscribers) {
+      const weatherDetails = await fetchWeather(subscriber.city);
+      if (weatherDetails) {
+        bot.telegram.sendMessage(subscriber.userId,weatherDetails)
       }
+      else{
+        bot.telegram.sendMessage(subscriber.userId,'Report is not available') 
+      }
+    }
+  }
+  catch(err){
+    console.log(err,'error');
+  }
 });
 
 const botEndpoint = 'https://tele-weather-bot.onrender.com/';
