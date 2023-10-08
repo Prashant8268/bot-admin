@@ -12,6 +12,9 @@ const app = express();
 const db = require('./config/mongoose');
 app.use(bodyParser.urlencoded({ extended: false }));
 
+const {initializeApiKeys} = require('./config/api');
+
+initializeApiKeys();
 const { bot } = require('./bot'); 
 
 app.use(session({ 

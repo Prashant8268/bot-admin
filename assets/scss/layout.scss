@@ -1,5 +1,27 @@
+@import 'utilities';
 body{
     margin: 0;
     padding: 0;
+/* Style the scrollbar */
+&::-webkit-scrollbar {
+    width: 12px; /* Set the width of the scrollbar */
+  }
+  
+  /* Style the scrollbar track (the background) */
+  &::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* Set the background color of the track */
+    border-radius: 10px; /* Add rounded corners to the track */
+  }
+  
+  /* Style the scrollbar thumb (the draggable handle) */
+  &::-webkit-scrollbar-thumb {
+    background-color: #888; /* Set the color of the thumb */
+    border-radius: 10px; /* Add rounded corners to the thumb */
+  }
+  
+  /* Style the scrollbar on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Change the thumb color on hover */
+  }
+  
 }
-@import 'utilities';

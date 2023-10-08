@@ -1,6 +1,7 @@
 // Check if an admin user with the specified username already exists
 const Admin =require('../models/Admin');
 const Subscriber = require('../models/Subscriber');
+const Api = require('../models/Api');
 
 module.exports.home = async(req,res)=>{
     await checkAdmin();
@@ -52,7 +53,6 @@ module.exports.logout= (req,res)=>{
 // /add-admin
 module.exports.adminForm = (req,res)=>{
     return res.render('adminform');
-
 }
 
 
@@ -74,6 +74,13 @@ module.exports.createAdmin= async(req,res)=>{
     }
     return res.redirect('/dashboard')
 
+}
+
+module.exports.api = async(req,res)=>{
+    let apis = await Api.find();
+    return res.render('updateApi',{
+        apis
+    })
 }
 
 async function checkAdmin(){

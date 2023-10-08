@@ -1,54 +1,4 @@
 <link rel="stylesheet" href="/css/dashboard.css">
-<!-- <div class="main">
-    <div class="side-bar">
-        <div class="logo">
-            <img src="https://cdn-icons-png.flaticon.com/512/3558/3558860.png" class="logo">
-        </div>
-
-        <ul>
-            <li class="sidebar-list">DASHBOARD</li>
-            <% if (admin.isAdmin) { %>
-                <li class="sidebar-list"><a href="">API DETAILS </a></li>
-                <li class="sidebar-list"><a href="/add-admin">ADD NEW ADMIN </a></li> 
-            <% } %>
-        </ul>
-        <div class="smallText">
-            Welcome to you dashboard,
-            Here you can modify you bot releated settings.
-        </div>
-
-    </div>
-    <div class="container">
-        <header>
-            <div id="admin-name"><%= admin.name %></div>
-            <div>
-                <a  href="/logout">Logout</a>
-            </div>
-        </header>
-
-        <div class="about">
-            Hello I am a telegram  weather bot.
-            If you want daily wheather updates subscriber me My Telegram 
-            Username is @HospalsBot.
-            You can unsubscriber whenever you want. Thank you.
-        </div>
-        <div class="activity">  
-            <h1>All Subscribers of your bot</h1>
-            <% for( subscriber of subscribers ) { %>
-                <li class="list-item" id="li-<%= subscriber.id %>">
-                    <%= subscriber.name %> 
-                        <button class="delete-btn"  id="<%= subscriber.id %>">
-                            Delete Subscriber
-                        </button>
-                </li>
-            <% } %>
-            <% if (subscribers.length==0) { %>
-             <li class="list-item">No subscribers</li>
-            <% } %>
-        </div>
-    </div>
-</div> -->
-
 <div class="main">
     <div class="rectangle5">
     </div>
@@ -76,7 +26,7 @@
                     </defs>
                   </svg>
                   <div class="list-text">
-                    General 
+                   <a href="" style="text-decoration: none;">/General</a> 
                   </div>
             </div>
             <div class="list-item">
@@ -92,7 +42,7 @@
                     </defs>
                   </svg>
                   <div class="list-text">
-                   <a href="" style="text-decoration: none;">API's</a> 
+                    API's
                   </div>
             </div>
             <div class="list-item">
@@ -108,7 +58,7 @@
                     </defs>
                   </svg>
                   <div class="list-text">
-                    <a href="/add-admin" style="text-decoration: none;">New Admin</a> 
+                   <a href="/add-admin">New Admin</a> 
                   </div>
             </div>
         </div>
@@ -119,21 +69,16 @@
                 Username is @HospalsBot.
                 You can unsubscriber whenever you want. Thank you.
             </div>
-            <div class="container">
-                <div class="heading">All Subscribers of Hospals</div> 
-                <div class="subscribers-container">
-                    <% for( subscriber of subscribers ) { %>
-                        <div class="subscriber" id="li-<%= subscriber.id  %>">
-                            <div><%= subscriber.name %></div>
-                            <div class="delete-btn">Delete</div>
-                        </div>
-                    <% } %>
-                </div>   
+            <div class="form-container ">
+                <form class="api-form" action="/api/update-api" method="POST"   >
+                    <label>Weather API Key</label>
+                    <input type="text" placeholder="New admin gmail" name="WEATHER_KEY" <%= apis.WEATHER_KEY  %>>
+                    <label>Get Coordinates API Key</label>
+                    <input type="text" placeholder="New admin name" name="GET_COORDINATS_KEY" <%= apis.GET_COORDINATS_KEY %> >
+                    <button>Update</button>
+                </form>
             </div>
         </div>
         <img src="https://cdn-icons-png.flaticon.com/512/3558/3558860.png" class="logo">
     </div>
 </div >
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="/js/home.js"></script>

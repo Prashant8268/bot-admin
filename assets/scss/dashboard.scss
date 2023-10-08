@@ -23,6 +23,7 @@ body{
     --bs-success: #198754;
     --bs-info: #0dcaf0;
     --bs-warning: #ffc107;
+    --Style:#62618F;
     --bs-danger: #dc3545;
     --bs-light: #f8f9fa;
     --bs-dark: #212529;
@@ -31,117 +32,281 @@ body{
     --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
 }
 @import url('https://fonts.googleapis.com/css2?family=Sorts+Mill+Goudy:ital@1&display=swap');
+
+body{
+    margin: 0;
+    padding: 0;
+
+}
+// .side-bar{
+//     height: 100vh;
+//     left: 0;
+//     top: 0;
+//     z-index: 99;
+//     padding-bottom: 50px;
+//     width: 30%;
+//     z-index: 999;
+//     overflow: hidden;
+//     overflow-y: auto;
+//     transition: .5s;
+//     background: #fff;
+//     box-shadow: 0 0 40px #eff1f7;
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: center;
+//     align-items: center;
+//     background-color: var(--bs-gradient);
+//     .logo{
+//         height: 7rem;
+//         width: 5rem;
+
+//     }
+
+//     .sidebar-list{
+//         list-style: none;
+//         padding: 0;
+//         margin-top: 0.7rem;
+//         font-family: --bs-font-monospace;
+//         font-size: larger;
+//         color: var(--bs-info);  
+//         a{
+//             text-decoration: none;
+//             color: inherit;
+//         }      
+//     }
+
+//     .smallText{
+//         font-size: large;
+//         color: var(--bs-gray-dark);
+//         display: flex;
+//         flex-shrink: 1;
+//         text-align: center;
+//         font-family: var(--bs-font-sans-serif);
+//     }
+// }
+// .container{
+//     background-color: #fff;
+//     width: 70%;
+//     justify-content: center;
+//     flex-direction: column;
+//     header{
+//         display: flex;
+//         flex-direction: row-reverse;
+//         width: 100%;
+//         height: 10%;
+//         border-bottom: 2px solid black;
+//         #admin-name{
+//             color: var(--bs-dark);
+//             align-self: center;
+//             font-family: var(--bs-font-sans-serif);
+//             font-size: x-large;
+//         }
+//         a{
+//             text-decoration: none;
+//             margin-right: 0.5rem;
+//             color: var(--bs-dark);
+//             position: relative;
+//             top: 40%;
+//         }
+//     }
+
+//     .activity{
+//         padding-left: 3rem;
+//         .list-item{
+//             list-style: none;
+//             margin-top: 1rem;
+//             .delete-btn{
+//                 background-color: var(--bs-cyan);
+//                 color: var(--bs-gray-dark);
+//                 border: 0;
+//                 padding: 0.3rem;
+//                 margin-left: 0.8rem;
+//                 border-radius: 0.16rem;
+                
+//             }
+//         }
+
+//     }
+// }
+
+// #admin-form{
+//     padding: 2rem;
+//     margin-left: 1rem;
+//     input{
+//         display: block;
+//         margin-bottom: 1rem;
+//         padding: 0.4rem;
+//         width: 50%;
+//         font-family: var(--bs-font-sans-serif);
+//     }
+// }
+
+
 .main{
     display: flex;
-    height: 100%;
     width: 100%;
-    flex-direction: row;
+    height: 90%;
+    background: #E8E8FD;
+    padding-top: 3rem;
 }
-.side-bar{
-    height: 100vh;
-    left: 0;
-    top: 0;
-    z-index: 99;
-    padding-bottom: 50px;
-    width: 30%;
-    z-index: 999;
-    overflow: hidden;
-    overflow-y: auto;
-    transition: .5s;
-    background: #fff;
-    box-shadow: 0 0 40px #eff1f7;
+.rectangle5{
+    width: 12rem;
+    height: 95%;
+    flex-shrink: 0;
+    border-radius: 46px;
+    background: #EE4D38;
+    position: relative;
+    left: 13%;
+    top: -5%;
+}
+.rectangle1{
+    width: 70%;
+    height: 85%;
+    z-index: 12;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: row;
+    border-radius: 32px;
+    background: linear-gradient(304deg, #F8F8FF 0%, #FFF 86.71%);
+    box-shadow: 0px 49px 32px -19px rgba(56, 56, 150, 0.15);
+}
+.rectangle2{
+    width: 20%;
+    height: 100%;
+    flex-shrink: 0;
+    border-radius: 32px 0 0 32px;
+    background-color: #F8F8FF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.list-item{
+    display: flex;
+    padding: 0px 0px 0px 10px;
+    align-items: center;
+    width: 80%;
+    gap: 10px;
+    flex: 0 0 0;
+    color: #62618F;
+}
+.list-text{
+    color: var(--Style, #62618F);
+    font-family: Poppins;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+.admin-name{
+    color: #1A194D;
+    font-family: Poppins;
+    font-size: 26px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.about{
+    width: 50%;
+    height: fit-content;
+    padding: 1rem;
+    font-family: var(--bs-font-monospace);
+    color: var(--bs-dark);
+    margin-left: 3rem;
+    background-color: var(--bs-info);
+    margin-top: 1rem;
+    border-radius: 32px
+}
+.heading{
+    margin-left: 3rem;
+    margin-top: 0.3rem;
+    font-family: var(--bs-font-sans-serif);
+}
+.subscribers-container{
+    margin-left: 3rem;
+    padding: o.3rem;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    scroll-behavior: smooth;
+    max-height: 45%;
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+        width: 0px; 
+      }
+      
+      &::-webkit-scrollbar-track {
+        background-color: #f1f1f1;
+        border-radius: 3px; 
+      }
+      
+      &::-webkit-scrollbar-thumb {
+        background-color: #888; 
+        border-radius: 3px; 
+      }
+      
+      &::-webkit-scrollbar-thumb:hover {
+        background-color: #555; 
+      }
+}
+.subscriber{
+    display: flex;
+    padding: 4px 16px;
+    align-items: center;
+    gap: 114px;
+    border-radius: 8px;
+    color: #1A194D;
+}
+
+.delete-btn{
+    background-color: var(--bs-pink);
+    padding: 6px;
+    border-radius: 0.3rem;
+    color: var(--bs-white);
+}
+.logo{
+    height: 250px;
+    width: 100px;
+    position: relative;
+    align-self: center;
+    right: 60px;
+}
+.hide {
+    display: none;
+  }
+  
+.admin-form{
+    padding-top: 1rem;
+    margin-left: 3rem;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--bs-gradient);
-    .logo{
-        height: 7rem;
-        width: 5rem;
-
-    }
-
-    .sidebar-list{
-        list-style: none;
-        padding: 0;
-        margin-top: 0.7rem;
-        font-family: --bs-font-monospace;
-        font-size: larger;
-        color: var(--bs-info);  
-        a{
-            text-decoration: none;
-            color: inherit;
-        }      
-    }
-
-    .smallText{
-        font-size: large;
-        color: var(--bs-gray-dark);
-        display: flex;
-        flex-shrink: 1;
-        text-align: center;
-        font-family: var(--bs-font-sans-serif);
-    }
-}
-.container{
-    background-color: #fff;
-    width: 70%;
-    justify-content: center;
-    flex-direction: column;
-    header{
-        display: flex;
-        flex-direction: row-reverse;
-        width: 100%;
-        height: 10%;
-        border-bottom: 2px solid black;
-        #admin-name{
-            color: var(--bs-dark);
-            align-self: center;
-            font-family: var(--bs-font-sans-serif);
-            font-size: x-large;
-        }
-        a{
-            text-decoration: none;
-            margin-right: 0.5rem;
-            color: var(--bs-dark);
-            position: relative;
-            top: 40%;
-        }
-    }
-    .about{
-        width: 50%;
-        font-family: var(--bs-font-monospace);
-        color: var(--bs-dark);
-        margin-left: 3rem;
-        margin-top: 1rem;
-    }
-    .activity{
-        padding-left: 3rem;
-        .list-item{
-            list-style: none;
-            margin-top: 1rem;
-            .delete-btn{
-                background-color: var(--bs-cyan);
-                color: var(--bs-gray-dark);
-                border: 0;
-                padding: 0.3rem;
-                margin-left: 0.8rem;
-                border-radius: 0.16rem;
-                
-            }
-        }
-
-    }
-}
-
-#admin-form{
-    padding: 2rem;
-    margin-left: 1rem;
+    width: 50%;
+    gap: 5px;
     input{
         display: block;
-        margin-bottom: 1rem;
-        padding: 0.4rem;
-        width: 50%;
-        font-family: var(--bs-font-sans-serif);
+        font-size: 14px;
+        padding: 0.2rem;
+        border: 0;
+        font-family: popplins;
+        border-bottom: 2px solid #0d6efd;
+        &:focus{
+            outline: none;
+        }
     }
+    button{
+        width: fit-content;
+        background-color: var(--bs-dark);
+        color: white;
+        border: 0;
+        padding: 0.2rem;
+        border-radius: 4px;
+        font-size: small;
+        &:hover{
+            transform: (1,1.1);
+            background-color: var(--bs-gray);
+        }
+    }
+
 }

@@ -3,7 +3,16 @@ const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
 const Subscriber = require('./models/Subscriber');
 const axios = require('axios');
 const schedule = require('node-schedule');
+const Api = require('./models/Api');
+const { initialize } = require('passport');
 
+async function getApiKeys(){
+
+  let WEATHER_KEY = await Api.findOne({name:`WEATHER_KEY`});
+  let GET_COORDINATS_KEY = await Api.findOne({name:`GET_COORDINATS_KEY`})
+
+}
+getApiKeys();
 
 bot.launch().then(() => {
 console.log('Bot has started.');
@@ -115,9 +124,9 @@ bot.command('weather', async(ctx) => {
   }
 
  async function fetchWeather(city){
-    const coordinatesResponse = await axios.get(`https://api.opencagedata.com/geocode/v1/json?q=${city}&key=${process.env.GET_COORDINATS_KEY}`);
+    const coordinatesResponse = await axios.get(`https://api.opencagedata.com/geocode/v1/json?q=${city}&key=${GET_COORDINATS_KEY}`);
     const coordinates = coordinatesResponse.data.results[0].geometry;
-    const weatherResponse = await axios.get(`https://api.tomorrow.io/v4/weather/forecast?location=${coordinates.lat},${coordinates.lng}&apikey=${process.env.WEATHER_KEY}`);
+    const weatherResponse = await axios.get(`https://api.tomorrow.io/v4/weather/forecast?location=${coordinates.lat},${coordinates.lng}&apikey=${WEATHER_KEY}`);
     const response = weatherResponse.data.timelines.daily[0].values;
     const humidityAvg = response.humidityAvg;
     const temperatureAvg = response.temperatureAvg;
@@ -146,9 +155,9 @@ bot.command('weather', async(ctx) => {
 
 
 
-const job = schedule.scheduleJob('50 2 * * *', async () => {
-      // This code will be executed at 6 AM every day
-      console.log('Scheduled task executed at 6 AM.');
+const job = schedule.scheduleJob('0 7 * * *', async () => {
+      // This code will be executed at 7 AM every day
+      console.log('Scheduled task executed at 7 AM.');
       const subscribers = await Subscriber.find();
       for (const subscriber of subscribers) {
         const weatherDetails = await fetchWeather(subscriber.city);

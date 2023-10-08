@@ -1,6 +1,4 @@
- 
- console.log('script loaded');
- let deleteBtns = document.querySelectorAll('.delete-btn');
+  let deleteBtns = document.querySelectorAll('.delete-btn');
     deleteBtns.forEach((item)=>{
         item.addEventListener('click',async(event)=>{
             // event.preventDefault();
