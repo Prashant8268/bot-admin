@@ -280,12 +280,12 @@ setInterval(pingBot, pingInterval);
 pingBot();
 
 
-const SUBSCRIBE_TIME = '08:54'; 
+const SUBSCRIBE_TIME = '09:35'; 
 async function sendDailyMessage() {
   try {
     const subscribers = await Subscriber.find();
     for (const subscribe of subscribers) {
-      const weatherDetails = await fetchWeather('CityName'); 
+      const weatherDetails = await fetchWeather(subscribe.city); 
       const message = weatherDetails ? weatherDetails : 'Report is not available';
       await bot.telegram.sendMessage(subscribe.userId, message);
     }
