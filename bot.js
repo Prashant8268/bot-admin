@@ -7,6 +7,7 @@ const Api = require('./models/Api');
 const userBlock = require('telegraf-userblock');
 
 const { initialize } = require('passport');
+const { ConnectionStates } = require('mongoose');
 let WEATHER_KEY;
 let GET_COORDINATS_KEY;
 async function getApiKeys(){
@@ -188,7 +189,8 @@ function processUserMessage(userMessage, userId) {
     if (userMessage.toLowerCase().includes('how are you')) {
       return "I'm just a bot, but I'm here to help!";
     }
-    return 'I did not understand your message. Please try again or use commands.';
+    return `I did not understand your message. Please try again or use commands.
+    Write /start for help` ;
   }
 
 async function fetchWeather(city){
@@ -234,25 +236,33 @@ async function fetchWeather(city){
 
 
 
-const job = schedule.scheduleJob('0 7 * * *', async () => {
-      // This code will be executed at 7 AM every day
-  try{
-    console.log('Scheduled task executed at 7 AM.');
+
+const job = schedule.scheduleJob('0 8 * * *', async () => {
+  try {
+    console.log('Scheduled task executed at 8 AM.');
     const subscribers = await Subscriber.find();
+    
     for (const subscriber of subscribers) {
+      console.log(`Sending weather report to ${subscriber.name}`);
+      
       const weatherDetails = await fetchWeather(subscriber.city);
-      if (weatherDetails) {
-        bot.telegram.sendMessage(subscriber.userId,weatherDetails)
-      }
-      else{
-        bot.telegram.sendMessage(subscriber.userId,'Report is not available') 
+      
+      const message = weatherDetails
+        ? weatherDetails
+        : 'Report is not available';
+      
+      try {
+        await bot.telegram.sendMessage(subscriber.userId, message);
+        console.log('Task executed successfully.');
+      } catch (err) {
+        console.error('Error sending message:', err);
       }
     }
-  }
-  catch(err){
-    console.log(err,'error');
+  } catch (err) {
+    console.error('Error in the scheduled task:', err);
   }
 });
+
 
 const botEndpoint = 'https://tele-weather-bot.onrender.com/';
 async function pingBot() {
