@@ -237,16 +237,14 @@ async function fetchWeather(city){
 
 
 
-const job = schedule.scheduleJob('0 8 * * *', async () => {
+const job = schedule.scheduleJob('30 9 * * *', async () => {
   try {
     console.log('Scheduled task executed at 8 AM.');
     const subscribers = await Subscriber.find();
     
     for (const subscriber of subscribers) {
       console.log(`Sending weather report to ${subscriber.name}`);
-      
       const weatherDetails = await fetchWeather(subscriber.city);
-      
       const message = weatherDetails
         ? weatherDetails
         : 'Report is not available';
