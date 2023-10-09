@@ -237,29 +237,29 @@ async function fetchWeather(city){
 
 
 
-const job = schedule.scheduleJob('30 9 * * *', async () => {
-  try {
-    console.log('Scheduled task executed at 8 AM.');
-    const subscribers = await Subscriber.find();
+// const job = schedule.scheduleJob('30 9 * * *', async () => {
+//   try {
+//     console.log('Scheduled task executed at 8 AM.');
+//     const subscribers = await Subscriber.find();
     
-    for (const subscriber of subscribers) {
-      console.log(`Sending weather report to ${subscriber.name}`);
-      const weatherDetails = await fetchWeather(subscriber.city);
-      const message = weatherDetails
-        ? weatherDetails
-        : 'Report is not available';
+//     for (const subscriber of subscribers) {
+//       console.log(`Sending weather report to ${subscriber.name}`);
+//       const weatherDetails = await fetchWeather(subscriber.city);
+//       const message = weatherDetails
+//         ? weatherDetails
+//         : 'Report is not available';
       
-      try {
-        await bot.telegram.sendMessage(subscriber.userId, message);
-        console.log('Task executed successfully.');
-      } catch (err) {
-        console.error('Error sending message:', err);
-      }
-    }
-  } catch (err) {
-    console.error('Error in the scheduled task:', err);
-  }
-});
+//       try {
+//         await bot.telegram.sendMessage(subscriber.userId, message);
+//         console.log('Task executed successfully.');
+//       } catch (err) {
+//         console.error('Error sending message:', err);
+//       }
+//     }
+//   } catch (err) {
+//     console.error('Error in the scheduled task:', err);
+//   }
+// });
 
 
 const botEndpoint = 'https://tele-weather-bot.onrender.com/';
@@ -278,6 +278,41 @@ async function pingBot() {
 const pingInterval = 5 * 60 * 1000; 
 setInterval(pingBot, pingInterval);
 pingBot();
+
+
+const SUBSCRIBE_TIME = '08:54'; 
+async function sendDailyMessage() {
+  try {
+    const subscribers = await Subscriber.find();
+    for (const subscribe of subscribers) {
+      const weatherDetails = await fetchWeather('CityName'); 
+      const message = weatherDetails ? weatherDetails : 'Report is not available';
+      await bot.telegram.sendMessage(subscribe.userId, message);
+    }
+    console.log('Daily messages sent successfully.');
+  } catch (err) {
+    console.error('Error sending daily messages:', err);
+  }
+}
+
+function scheduleDailyTask() {
+  const now = new Date();
+  const targetTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), ...SUBSCRIBE_TIME.split(':')); // Parse time
+  const timeUntilNextExecution = targetTime - now;
+
+  if (timeUntilNextExecution < 0) {
+    targetTime.setDate(targetTime.getDate() + 1);
+  }
+  const delay = targetTime - now;
+  setTimeout(() => {
+    sendDailyMessage(); 
+    scheduleDailyTask(); 
+  }, delay);
+}
+
+scheduleDailyTask();
+
+
 
 module.exports = {
     bot,
