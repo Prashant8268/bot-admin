@@ -23,6 +23,14 @@ ADMIN_EMAIL,
 ADMIN_PASSWORD,
 TELEGRAM_BOT_TOKEN,
 
+
+3.Setting APIs in .env 
+## WEATHER_KEY www.tomorrow.io
+## GET_COORDINATS_KEY  https://opencagedata.com/
+
+GET_COORDINATS_KEY = 66e757103f41494ca485b0d8529a8196
+
+
 3.Run project :
 ```bash
 npm start 
