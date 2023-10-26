@@ -14,14 +14,14 @@ a) Search for @BotFather.
 b) Create new bot using /newbot command.
    
 2. Create .env file and define below variables
-PORT // define PORT
-CLIENT_ID //google client ID
-CLIENT_SECRET //your client secret 
-CALLBACK_URL // your googleOauth callback URL
-MONGO_URL  //your DB URL
-ADMIN_EMAIL  //your admin email 
-ADMIN_PASSWORD  //your admin password 
-TELEGRAM_BOT_TOKEN //your bot token
+PORT,
+CLIENT_ID ,
+CLIENT_SECRET ,
+CALLBACK_URL,
+MONGO_URL,
+ADMIN_EMAIL,
+ADMIN_PASSWORD,
+TELEGRAM_BOT_TOKEN,
 
 3.Run project :
 ```bash
