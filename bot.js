@@ -1,21 +1,29 @@
 const {Telegraf} = require('telegraf');
-const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN2);
 const Subscriber = require('./models/Subscriber');
 const axios = require('axios');
 const schedule = require('node-schedule');
 const Api = require('./models/Api');
 const userBlock = require('telegraf-userblock');
-
 const { initialize } = require('passport');
 const { ConnectionStates } = require('mongoose');
+
+
+// declaring bot 
+const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN2);
+
+
 let WEATHER_KEY;
 let GET_COORDINATS_KEY;
+
+// fetching api keys 
 async function getApiKeys(){
    WEATHER_KEY = await Api.findOne({name:`WEATHER_KEY`});
    GET_COORDINATS_KEY = await Api.findOne({name:`GET_COORDINATS_KEY`});
-
 }
 getApiKeys();
+
+
+// error handle for users that have blocked bot 
 bot.use(
   userBlock({
       onUserBlock: (ctx, next, userId) => {
@@ -24,9 +32,16 @@ bot.use(
       },
   })
 );
+
+
+
+// launching bot 
 bot.launch().then(() => {
 console.log('Bot has started.');
 });
+
+
+
 
 
 
@@ -72,7 +87,6 @@ bot.command('subscribe', async (ctx) => {
     if (existingSubscriber) {
         ctx.reply('You are already subscribed.');
       } else{ 
-        // Create a new subscriber
         const newSubscriber = await Subscriber.create({
           name,userId,city
         });
@@ -87,7 +101,6 @@ bot.command('subscribe', async (ctx) => {
   catch(err){
     console.log(err,'errror')
   }
-
 });
 
 
@@ -112,6 +125,8 @@ bot.command('unsubscribe', async (ctx) => {
 
 });
 
+
+
 bot.command('weather', async(ctx) => {
   try{
     const commandArgs = ctx.message.text.split(' '); 
@@ -130,8 +145,9 @@ bot.command('weather', async(ctx) => {
   catch(err){
     console.log(err,'error');
   }
-
   });
+
+
 
   bot.help((ctx) => {
     try{
@@ -141,6 +157,8 @@ bot.command('weather', async(ctx) => {
       console.log(err,'error');
     }
   });
+
+
   bot.command('hello',(ctx)=>{
     try{
       ctx.reply('I am Fine How are you ')
@@ -182,6 +200,8 @@ bot.on('text', async (ctx) => {
     }
   });
 
+
+// helper function for processing text messages
 function processUserMessage(userMessage, userId) {
     if (userMessage.toLowerCase().includes('hello')) {
       return 'Hi there!';
@@ -193,6 +213,9 @@ function processUserMessage(userMessage, userId) {
     Write /start for help` ;
   }
 
+
+
+// helper function for fetching data from apis
 async function fetchWeather(city){
   try{
     const coordinatesResponse = await axios.get(`https://api.opencagedata.com/geocode/v1/json?q=${city}&key=${GET_COORDINATS_KEY.key}`);
@@ -235,34 +258,9 @@ async function fetchWeather(city){
 } 
 
 
-
-
-// const job = schedule.scheduleJob('30 9 * * *', async () => {
-//   try {
-//     console.log('Scheduled task executed at 8 AM.');
-//     const subscribers = await Subscriber.find();
-    
-//     for (const subscriber of subscribers) {
-//       console.log(`Sending weather report to ${subscriber.name}`);
-//       const weatherDetails = await fetchWeather(subscriber.city);
-//       const message = weatherDetails
-//         ? weatherDetails
-//         : 'Report is not available';
-      
-//       try {
-//         await bot.telegram.sendMessage(subscriber.userId, message);
-//         console.log('Task executed successfully.');
-//       } catch (err) {
-//         console.error('Error sending message:', err);
-//       }
-//     }
-//   } catch (err) {
-//     console.error('Error in the scheduled task:', err);
-//   }
-// });
-
-
 const botEndpoint = 'https://tele-weather-bot.onrender.com/';
+
+// pingBot function for avoid server sleeping 
 async function pingBot() {
   try {
     const response = await axios(botEndpoint);
@@ -280,6 +278,8 @@ setInterval(pingBot, pingInterval);
 pingBot();
 
 
+
+
 const SUBSCRIBE_TIME = '09:35'; 
 async function sendDailyMessage() {
   try {
@@ -295,6 +295,9 @@ async function sendDailyMessage() {
   }
 }
 
+
+
+// function for scheduling daily messages
 function scheduleDailyTask() {
   const now = new Date();
   const targetTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), ...SUBSCRIBE_TIME.split(':')); // Parse time
@@ -310,9 +313,9 @@ function scheduleDailyTask() {
   }, delay);
 }
 
+
+
 scheduleDailyTask();
-
-
 
 module.exports = {
     bot,

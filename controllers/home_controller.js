@@ -35,7 +35,6 @@ module.exports.dashboard = async(req,res)=>{
 
 // for deleting a subscriber
 module.exports.deleteSubscriber = async(req,res)=>{
-
     const subscriber = await Subscriber.findByIdAndDelete(req.query.id);
     return res.json({
         id: req.query.id
@@ -50,6 +49,7 @@ module.exports.logout= (req,res)=>{
     }
     return res.redirect('/');
 }
+
 
 // /add-admin
 module.exports.adminForm = (req,res)=>{
@@ -77,6 +77,8 @@ module.exports.createAdmin= async(req,res)=>{
 
 }
 
+
+
 module.exports.api = async(req,res)=>{
     let apis = await Api.find();
     console.log(apis)
@@ -84,6 +86,8 @@ module.exports.api = async(req,res)=>{
         apis
     })
 }
+
+
 
 async function checkAdmin(){
     const isAdminPresent = await Admin.findOne({email:process.env.ADMIN_EMAIL});
@@ -96,5 +100,4 @@ async function checkAdmin(){
         isAdmin:true,
         name:'Prashant'
     });
-
 }

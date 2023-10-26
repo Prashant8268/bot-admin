@@ -17,6 +17,8 @@ const {initializeApiKeys} = require('./config/api');
 initializeApiKeys();
 const { bot } = require('./bot'); 
 
+
+bot.launch();
 app.use(session({ 
   name: "teleBot",
   saveUninitialized: false,
@@ -29,7 +31,6 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-
 app.use(passport.setAuthenticatedUser);
 
 // Middleware for SASS compilation

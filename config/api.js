@@ -5,7 +5,7 @@ const { initialize } = require('passport');
 
 
 async function initializeApiKeys(){
-
+    console.log('check point 1 ')
     const isApiPresent = await Api.find();
     if(isApiPresent.length>0){
         return ;
