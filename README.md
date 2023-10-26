@@ -25,10 +25,12 @@ TELEGRAM_BOT_TOKEN,
 
 
 3.Setting APIs in .env 
-## WEATHER_KEY www.tomorrow.io
-## GET_COORDINATS_KEY  https://opencagedata.com/
+```bash
+WEATHER_KEY www.tomorrow.io
 
-GET_COORDINATS_KEY = 66e757103f41494ca485b0d8529a8196
+```bash
+GET_COORDINATS_KEY  https://opencagedata.com
+
 
 
 3.Run project :
