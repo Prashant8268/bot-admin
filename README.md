@@ -27,11 +27,10 @@ TELEGRAM_BOT_TOKEN,
 3.Setting APIs in .env 
 ```bash
 WEATHER_KEY www.tomorrow.io
-
+```
 ```bash
 GET_COORDINATS_KEY  https://opencagedata.com
-
-
+```
 
 3.Run project :
 ```bash
